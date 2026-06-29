@@ -82,8 +82,18 @@ class _MahasiswaScanScreenState extends State<MahasiswaScanScreen> {
   }
 
   Future<void> _startScanFlow() async {
+    final demoModeMessage = _firestoreService.isDemoMode
+        ? "Mode demo lokal aktif. Data disimpan di perangkat ini."
+        : "Meminta izin Bluetooth & Lokasi...";
+
+    if (_firestoreService.isDemoMode) {
+      setState(() {
+        _scanStatusMessage = demoModeMessage;
+      });
+    }
+
     setState(() {
-      _scanStatusMessage = "Meminta izin Bluetooth & Lokasi...";
+      _scanStatusMessage = demoModeMessage;
     });
 
     final hasPermissions = await PermissionService.requestBlePermissions();

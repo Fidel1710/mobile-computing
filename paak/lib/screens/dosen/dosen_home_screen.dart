@@ -39,6 +39,17 @@ class _DosenHomeScreenState extends State<DosenHomeScreen> {
 
   void _startSession(UserProvider userProvider) async {
     if (_formKey.currentState!.validate()) {
+      if (_firestoreService.isDemoMode) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              "Mode demo lokal aktif. Sesi disimpan di perangkat ini.",
+            ),
+            backgroundColor: Colors.teal,
+          ),
+        );
+      }
+
       setState(() => _isLoading = true);
 
       final sessionId = const Uuid().v4();
